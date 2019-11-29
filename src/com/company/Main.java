@@ -1,7 +1,5 @@
 package com.company;
 
-import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
-
 import java.util.Random;
 
 public class Main {
