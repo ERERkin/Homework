@@ -1,0 +1,41 @@
+create table visitors(
+	visitor_id int primary key,
+	visitor_name varchar(50) not null,
+	birgthDate int not null,
+	gender varchar(6)
+);
+create table attendannce(
+	attendance_id int primary key,
+	attendance_time varchar(9) not null,
+	coach_name varchar(50) not null,
+	visitors_attedance int references visitors(visitor_id)
+);
+select * from visitors;
+select * from attendannce;
+insert into visitors(visitor_id, visitor_name, birgthDate, gender)
+values (1, 'A', 2000, 'male'),
+(2, 'B', 2000, 'female'),
+(3, 'C', 2000, 'male'),
+(4, 'D', 2000, 'female'),
+(5, 'E', 2000, 'male');
+insert into attendannce(attendance_id, attendance_time, coach_name, visitors_attedance)
+values (1,'1600-1700', 'Z', 1),
+(2,'1600-1700', 'Z', 2),
+(3,'1600-1700', 'Z', 3),
+(4,'1600-1700', 'Z', 4),
+(5,'1600-1700', 'Z', 5);
+1)Как вы понимаете Git?
+Это система контроля версий, для сохранности версий программы и работе с разными версиями программы.
+2)Для чего нам нужны Базы Данных?
+Для быстрого доступа к данным через HDD, а также для порядка в сохранении данных
+3)Что такое первичный ключ (Primary Key)?
+Ключ по которому на таблицу ссылается другая таблица, значение непустое и уникальное
+4)Что такое внешний ключ (Foreign Key)?
+Место в таблице где хранится ключ другой таблицы
+5)Чем отличаются колонки от строк?
+В колонках хранятся типы данных
+В строках сами данные
+6)Чем отличаются таблицы от базы данных?
+В том, что база данных это набор ссылающихся друг на друга таблиц(что сокращает данные и их потребление памяти)
+7)Что такое CRUD операции?
+Это операции добавления, замены, деления и многое другое в базе данных
