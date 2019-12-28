@@ -1,0 +1,93 @@
+create table visitors(
+	visitor_id int primary key,
+	visitor_name varchar(50) not null,
+	birgthDate int not null,
+	gender varchar(6)
+);
+create table attendannce(
+	attendance_id int primary key,
+	attendance_time varchar(9) not null,
+	coach_name varchar(50) not null,
+	visitors_attedance int references visitors(visitor_id)
+);
+select * from visitors;
+select * from attendannce;
+insert into visitors(visitor_id, visitor_name, birgthDate, gender)
+values (1, 'A', 2000, 'male'),
+(2, 'B', 2000, 'female'),
+(3, 'C', 2000, 'male'),
+(4, 'D', 2000, 'female'),
+(5, 'E', 2000, 'male');
+insert into attendannce(attendance_id, attendance_time, coach_name, visitors_attedance)
+values (1,'1600-1700', 'Z', 1),
+(2,'1600-1700', 'Z', 2),
+(3,'1600-1700', 'Z', 3),
+(4,'1600-1700', 'Z', 4),
+(5,'1600-1700', 'Z', 5);
+
+// Это с прошлого дз
+
+select v.visitor_name, a.coach_name, a.attendance_time from attendannce a
+join visitors v on a.visitors_attedance = v.visitor_id order by attendance_time desc;
+
+// Это нынешнее дз
+
+create table courses(
+	id serial primary key,
+	name varchar(15) unique not null,
+	price int not null
+);
+
+create table it_groups(
+	id serial primary key,
+	name varchar(15) unique not null,
+	course int references courses(id),
+	trainer varchar(50) not null
+);
+
+create table students(
+	id serial primary key,
+	name varchar(50) not null,
+	it_group int references it_groups(id),
+	birth_date int not null,
+	gender varchar(50)
+);
+
+select * from courses;
+insert into courses(name, price)
+values('Java', 1000),
+('Frond End', 700),
+('Python', 1000),
+('C#', 1000),
+('Android', 1000);
+select * from it_groups;
+insert into it_groups(name, course, trainer)
+values ('JV1901', 1, 'Ashat Serikov'),
+('JV1902', 1, 'I dont know'),
+('FE1901', 2, 'I dont know'),
+('FE1902', 2, 'I dont know'),
+('PY1901', 3, 'I dont know'),
+('PY1902', 3, 'I dont know');
+select * from students;
+insert into students(name, it_group, birth_date, gender)
+values ('A B', 1, 1995, 'male'),
+('B B', 5, 1995, 'female'),
+('C B', 3, 1995, 'male'),
+('A C', 4, 1995, 'male'),
+('C A', 2, 1995, 'female'),
+('C D', 1, 1995, 'female'),
+('D C', 6, 1995, 'male'),
+('K B', 3, 1995, 'male'),
+('E T', 1, 1995, 'male'),
+('A S', 6, 1995, 'male'),
+('L L', 2, 1995, 'male'),
+('F C', 3, 1995, 'female'),
+('X Z', 4, 1995, 'male'),
+('D B', 5, 1995, 'male');
+
+select * from students it_academy
+join it_groups g on it_academy.it_group = g.id
+join courses c on g.course = c.id
+order by it_academy.name desc;
+
+// Второе задание
