@@ -1,0 +1,127 @@
+create table sport_types(
+  id integer primary key,
+  name varchar(50) not null,
+  salary integer  not null
+);
+create table trainers(
+  id integer primary key,
+  name varchar(50) not null,
+  phone_number varchar(20),
+  inn varchar(14) unique not null,
+  sport_type integer references sport_types(id)
+);
+
+
+select * from
+sport_types;
+insert into sport_types(id, name, salary)
+values (1, 'Football', 5000),
+(2, 'Basketball', 4000),
+(3, 'Valleyball', 4000),
+(4, 'Golf', 3000),
+(5, 'Swimming', 6000);
+
+select * from trainers;
+insert into trainers(id,name,phone_number,inn,sport_type)
+values (1,'Roman','+996','1',1),
+(2,'Jack','+996','2',2),
+(3,'Jin','+996','3',3),
+(4,'Lex','+996','4',4),
+(5,'Tilek','+996','5',5);
+
+create table groups_3(
+     id serial primary key,
+     name varchar(50) unique not null
+);
+create table students_3(
+     id serial primary key,
+     name varchar(50) not null,
+     group_s integer references groups_3(id)
+);
+select * from groups_3;
+insert into groups_3(name)
+values ('JAVA'),
+('C#'),
+('C++'),
+('Python');
+insert into students_3(name, group_s)
+values ('Иванов', 1),
+('Петров', 1),
+('Сидоров', 3),
+('Смирнов', 4),
+('Егоров', null);
+
+create table countries(
+	id serial primary key,
+	name varchar(50) not null,
+	code varchar(20) not null,
+	population int,
+	president varchar(50)
+);
+
+create table cities(
+	id serial primary key,
+	name varchar(50),
+	country integer references countries(id) not null,
+	mayor varchar(50)
+);
+
+insert into countries(name, code, population, president)
+values ('Kyrgyzstan', '+996', 7000000, 'Sooronbai Jeenbekov'),
+('Russia', '+7', 146000000, 'Vladimir Putin');
+
+insert into cities(name, country, mayor)
+values ('Bishkek', 1, 'Хз'),
+('Karakol', 1, 'Hz'),
+('Moskow', 2, 'Sobyanin');
+
+ALTER TABLE countries ADD COLUMN language_country CHAR(30) null;
+
+create table universities(
+	id serial primary key,
+	name varchar(30) unique not null
+);
+
+create table faculties(
+	id serial primary key,
+	name varchar(30),
+	university integer references countries(id) not null
+);
+
+create table groups_4(
+	id serial primary key,
+	name varchar(30),
+	faculty integer references faculties(id) not null
+);
+
+create table students_4(
+	id serial primary key,
+	name varchar(50) not null,
+	birth_day varchar(15) not null,
+	group_4 integer references groups_4(id) not null
+);
+
+create table subjects(
+	id serial primary key,
+	name varchar(40) unique not null
+);
+
+create table marks(
+	id serial primary key,
+	student integer references students_4(id) not null,
+	subject integer references subjects(id) not null
+)
+
+ALTER TABLE marks ADD COLUMN mark int not null;
+
+insert into universities(name) values ('It Academy');
+
+insert into faculties(name, university) values ('Back-End',1);
+
+insert into groups_4(name, faculty) values ('JAVA1901',1);
+
+insert into students_4(name, group_4, birth_day) values('Me', 1,'14.1.1989');
+
+insert into subjects(name) values ('Java basic'), ('OOP'), ('SQL');
+
+insert into marks(student, subject, mark) values (2,1,80), (2,2,70),(2,3,75);
