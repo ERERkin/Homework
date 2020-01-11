@@ -1,3 +1,10 @@
+Задача A.Работа с Базой данных
+
+Вывести список тренеров и их заработных плат в консоль.
+Вывести итоговую заработную плату по всем тренерам.
+Если фамилия тренера состоит из более чем 3 символов дописать «молодец» в консоль.
+Все сохранить в своём Git репозитории + выложить в Moodle
+
 create table sport_types(
   id integer primary key,
   name varchar(50) not null,
@@ -29,6 +36,13 @@ values (1,'Roman','+996','1',1),
 (4,'Lex','+996','4',4),
 (5,'Tilek','+996','5',5);
 
+
+Задача Б
+В Java:
+
+Вывести текст «в группе N студентов» в консоль.
+Вывести список всех групп (ID и наименование) в консоль.
+
 create table groups_3(
      id serial primary key,
      name varchar(50) unique not null
@@ -51,31 +65,86 @@ values ('Иванов', 1),
 ('Смирнов', 4),
 ('Егоров', null);
 
+
+Задача С
+
+Создать таблицы:
+Страны (Id, Название, Код страны, Население, Президент(?) )
+Города (Id, Название, Страна, Мэр(?), Население)
+Люди (Id, ФИО, Дата рождения)
+Заполнить данными таблицы (10 человек, 3 города, 2 страны  минимум)
+Выбрать все города страны, название которой начинается на букву «К»
+Подсчитать общее количество человек в городах каждой страны.
+Добавить возможность добавления понятия «Гос. Языка» к каждой стране.
+
+create table people(
+	id serial primary key,
+	name varchar(50),
+	birth_date varchar(15)
+);
+
+insert into people(name, birth_date)
+values ('Abc Abc', '1-12-1989'),
+('Abd Abc', '2-12-1989'),
+('Abc Abd', '3-12-1989'),
+('Abb Abb', '4-12-1989'),
+('Acc Acc', '5-12-1989'),
+('Agc Agc', '6-12-1989'),
+('Abc Abc', '7-12-1989'),
+('Abc Abc', '8-12-1989'),
+('Abc Abc', '10-12-1989'),
+('Abc Abc', '12-12-1989');
+
 create table countries(
 	id serial primary key,
 	name varchar(50) not null,
 	code varchar(20) not null,
 	population int,
-	president varchar(50)
+	president int references people(id) not null
 );
 
 create table cities(
 	id serial primary key,
 	name varchar(50),
 	country integer references countries(id) not null,
-	mayor varchar(50)
+	mayor int references people(id) not null
 );
 
 insert into countries(name, code, population, president)
-values ('Kyrgyzstan', '+996', 7000000, 'Sooronbai Jeenbekov'),
-('Russia', '+7', 146000000, 'Vladimir Putin');
+values ('Kyrgyzstan', '+996', 7000000, 1),
+('Russia', '+7', 146000000, 2);
 
 insert into cities(name, country, mayor)
-values ('Bishkek', 1, 'Хз'),
-('Karakol', 1, 'Hz'),
-('Moskow', 2, 'Sobyanin');
+values ('Bishkek', 1, 3),
+('Karakol', 1, 4),
+('Moskow', 2, 5);
 
 ALTER TABLE countries ADD COLUMN language_country CHAR(30) null;
+
+select c2.name, p.name, c3.name, p1.name, c3.code, c3.population from cities c2
+join countries c3 on c2.country = c3.id
+join people p on c2.mayor = p.id
+join people p1 on c3.president = p1.id
+where c3.name like 'K%';
+
+update countries set language_country = 'rus' where id = 1;
+
+select sum(c2.population) from countries c2;
+
+
+Задача Д
+
+Создать таблицы:
+Студентов (Id, ФИО, Группа, Дата рождения)
+Групп (Id, Факультет, Код группы)
+Факультетов (Id, Название, Университет)
+Университет (Id, Название)
+Предметы (Id, Название)
+Оценок (Студент, Оценка, Предмет)
+Заполнить таблицы
+Подсчитать среднее арифметическое всех оценок определенного студента.
+Вывести полную информацию по студенту – ФИО, Название Группы, Название Факультета, Название Университета
+
 
 create table universities(
 	id serial primary key,
@@ -125,3 +194,18 @@ insert into students_4(name, group_4, birth_day) values('Me', 1,'14.1.1989');
 insert into subjects(name) values ('Java basic'), ('OOP'), ('SQL');
 
 insert into marks(student, subject, mark) values (2,1,80), (2,2,70),(2,3,75);
+
+insert into students_4(name, group_4, birth_day) values('He', 1,'14.1.1989');
+insert into marks(student, subject, mark) values (7,1,70), (7,2,60),(7,3,70);
+
+select avg(m.mark) from marks m
+join students_4 s on m.student = s.id
+join subjects s1 on m.subject = s1.id
+where s."name" = 'Me';
+
+select s."name",g."name",f."name",u."name" from students_4 s
+join groups_4 g on s.group_4 = g.id
+join faculties f on g.faculty = f.id
+join universities u on f.university = u.id
+where s."name" = 'Me';
+
