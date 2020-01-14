@@ -1,0 +1,6 @@
+create table cities_2(
+	id int primary key,
+	name varchar(50) not null,
+	population int not null,
+	mayor varchar(50) not null
+);
