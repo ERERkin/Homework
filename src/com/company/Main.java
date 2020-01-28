@@ -9,6 +9,7 @@ public class Main {
     private static final String password = "postgres";
 
     public static void main(String[] args) throws SQLException {
+        //Logs
         Main DB = new Main();
         Connection connection = connect();
         User user = new User("Aza","Aza@za","aza123");
