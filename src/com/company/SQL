@@ -1,0 +1,14 @@
+create table users(
+    id serial primary key ,
+    login varchar(50) unique not null,
+    email varchar(50) unique not null,
+    password varchar(50) not null,
+    date_of_registration varchar(15) not null
+);
+
+create table userLogs(
+    id serial primary key ,
+    user int references users(id) not null,
+    time varchar(50) not null ,
+    status varchar(50) not null
+);
