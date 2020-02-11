@@ -18,6 +18,9 @@ public class Main {
         for(int i = 0; i < 100; i++){
             map.put(i, new Auto());
         }
+        for(HashMap.Entry<Integer, Auto> c : map.entrySet()){
+            System.out.println(c);
+        }
     }
 
     public static Connection connect() {
@@ -77,5 +80,16 @@ class Auto{
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    @Override
+    public String toString() {
+        return "Auto{" +
+                "id=" + id +
+                ", manufactureYear=" + manufactureYear +
+                ", model='" + model + '\'' +
+                ", price=" + price +
+                ", color='" + color + '\'' +
+                '}';
     }
 }
