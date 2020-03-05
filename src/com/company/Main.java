@@ -10,9 +10,21 @@ public class Main {
     private static final String password = "postgres";
 
     public static void main(String[] args) throws SQLException {
-        Main DB = new Main();
-        Connection connection = DB.connect();
-        if (connection != null) connection.close();
+//        Main DB = new Main();
+//        Connection connection = DB.connect();
+//        if (connection != null) connection.close();
+        Thread t1 = new Thread(new ThreadD(1));
+        Thread t2 = new Thread(new ThreadD(2));
+        Thread t3 = new Thread(new ThreadD(3));
+        t1.start();
+        t2.start();
+        try {
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        t3.start();
     }
 
     public static Connection connect() {
